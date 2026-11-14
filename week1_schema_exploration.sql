@@ -4,6 +4,22 @@
 -- Tables: rets_openhouses.sql, rets_property.sql, california_sold.sql
 -- Author: Brett Loy
 -- ============================================================
+/*
+
+EDA Summary for rets_property
+
+Regarding null values, most of the null values are in columns that are not very relevant. In the relevant 
+columns like price, beds, square foot, or city, there is less than 1% null values. As we check for duplicates, 
+there are no duplicates in the rets_property dataset and all rows have distinct IDs. In this dataset checking 
+for outliers and inconsistencies is where it gets interesting. For example there are many outliers where the 
+price's maximum is 135 million while the minimum is $795. So many variables have outliers and doing an IQR 
+filtering method might be best, as well as using the median to find the middle in this dataset. Similarly there 
+are some inconsistencies, such as close_date values being in the future. These outliers and inconsistencies 
+should be flagged as data quality concerns. In total, with some cleaning and filtering, this dataset can be trusted.
+
+*/
+
+
 
 -- Exercise 1.1 Discovering What Tables Exist
 
@@ -108,7 +124,7 @@ COUNT(*) AS total
 FROM california_sold
 GROUP BY CloseDate
 ORDER BY CloseDate DESC;
-dates from 2025-2072
+-- dates from 2025-2072. possibly some error close dates in future flag
 
 -- Do city names match between the two tables?
 SHOW COLUMNS FROM california_sold LIKE '%city%';
@@ -132,6 +148,8 @@ WHERE L_SystemPrice IS NULL; -- Bug: this will never match anything
 -- = NULL doesn't work because NULL is not a value. so we use IS or IS NOT
 
 
+-- Week 1 Deliveragles
+
 -- ANALYSIS for each dataset 
 DESCRIBE rets_property;
 
@@ -143,6 +161,10 @@ SELECT
 DESCRIBE california_sold;
 
 DESCRIBE rets_openhouse;
+
+-- Week 1 Open-Ended Challenge:
+
+
 
 
 
